@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Native test_suite]">
+  <test thread-count="5" name="Module 1(failed)">
+    <classes>
+      <class name="test.SearchScenario">
+        <methods>
+          <include name="test1"/>
+          <include name="afterSuite"/>
+          <include name="beforeSuite"/>
+          <include name="beforeMethod"/>
+          <include name="afterMethod"/>
+        </methods>
+      </class> <!-- test.SearchScenario -->
+    </classes>
+  </test> <!-- Module 1(failed) -->
+</suite> <!-- Failed suite [Native test_suite] -->
