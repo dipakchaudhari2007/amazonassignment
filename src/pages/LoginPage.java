@@ -1,19 +1,19 @@
 package pages;
 
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.testng.Assert;
+import org.testng.Reporter;
 import core.BaseTestPage;
+import core.FileInput;
 import core.TestReporter;
 import io.appium.java_client.MobileElement;
 
 public class LoginPage extends BaseTestPage{
 	WebDriverWait wait=new WebDriverWait(driver, 20);
 	
-	@FindBy(xpath = "")
-    private MobileElement radioButtonLogin;
+	FileInput files= new FileInput();
 
 	@FindBy(xpath = "//*[@resource-id=\"ap_email_login\"]")
     private MobileElement textBoxMobileNumber;
@@ -27,29 +27,21 @@ public class LoginPage extends BaseTestPage{
 	@FindBy(xpath = "//*[@resource-id=\"continue\"]")
     private MobileElement buttonContinue;
 	
-	
 
-	public MobileElement getRadioButtonLogin() {
-		return radioButtonLogin;
+	/**
+	 * User login
+	 */
+	public LoginPage userLogIn() {
+		try {
+			String username = files.Username(); //Fetching login username from TestData.xls
+			String password = files.Password(); //Fetching login password from TestData.xls
+			signIn(username, password); //Calling login method
+			Assert.assertTrue(true,"Login Successful");
+		} catch (Exception e) {
+			Assert.fail("Sign in failed");
+		}
+		return this;
 	}
-
-	public MobileElement getTextBoxMobileNumber() {
-		return textBoxMobileNumber;
-	}
-
-	public MobileElement getTextBoxPassword() {
-		return textBoxPassword;
-	}
-
-	public MobileElement getButtonLogin() {
-		return buttonLogin;
-	}
-
-	public MobileElement getButtonContinue() {
-		return buttonContinue;
-	}
-
-
 
 	@Override
 	public void waitForPageToLoad() {
@@ -57,17 +49,22 @@ public class LoginPage extends BaseTestPage{
 	}
 	
 	
-	
+	/**
+	 * Enter username and password for Sign In
+	 * @param mobile_no
+	 * @param pass
+	 */
 	public void signIn(String mobile_no,String pass) {
-		getTextBoxMobileNumber().sendKeys(mobile_no);
-		getButtonContinue().click();
-		
-		wait.until(ExpectedConditions.visibilityOf(textBoxPassword));
-		getTextBoxPassword().sendKeys(pass);
-		
-		TestReporter.logWithScreenShot("Before Login");
-		getButtonLogin().click();
-		
+		try {
+			textBoxMobileNumber.sendKeys(mobile_no);
+			buttonContinue.click();
+			wait.until(ExpectedConditions.visibilityOf(textBoxPassword));
+			textBoxPassword.sendKeys(pass);
+			TestReporter.logWithScreenShot("Before Login");
+			buttonLogin.click();
+			Reporter.log("Successfully entered login details and clicked Login button");
+		} catch (Exception e) {
+			Assert.fail("Failed to enter login details and Continue");
+		}
 	}
-
 }

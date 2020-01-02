@@ -1,15 +1,13 @@
 package pages;
 
-import java.util.List;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.testng.Assert;
+import org.testng.Reporter;
 import core.BaseTestPage;
-import core.TestReporter;
-import io.appium.java_client.MobileElement;
+import core.Utility;
 
 public class ProductDetailsPage extends BaseTestPage{
 
@@ -19,24 +17,28 @@ public class ProductDetailsPage extends BaseTestPage{
 	
 	@FindBy(xpath = "//*[@resource-id='buyNowCheckout']")
 	private WebElement buttonBuyNow;
-	
-	
-	
-	public WebElement getLabelProductTitle() {
-		return labelProductTitle;
-	}
-
-	public WebElement getButtonBuyNow() {
-		return buttonBuyNow;
-	}
-	
-	
 
 	@Override
 	public void waitForPageToLoad() {
 		WebDriverWait wait=new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(labelProductTitle));
 	}	
-		
-
+	
+	/**
+	 * Buy Now button click on Product details page
+	 * @return
+	 */
+	
+	public ProductDetailsPage clickBuyNowButton() {
+		try {
+			while(!(buttonBuyNow.isDisplayed())){ 	
+			Utility.swipeVeritcal(driver, 0.9, 0.2, 2); //Scroll Down till Buy Now button displayed
+			}
+			buttonBuyNow.click();
+			Reporter.log("Buy Now button is clicked");
+		} catch (Exception e) {
+			Assert.fail("Failed to click Buy Now button");
+		}
+		return this;
+	}
 }

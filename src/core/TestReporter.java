@@ -29,9 +29,6 @@ public class TestReporter {
 		} catch (Exception e) {
 			String image=Config.test.addScreenCapture(Support.getScreenshot(msg));
 			Config.test.log(LogStatus.FAIL, msg, image);
-		}
-		
+		}	
 	}
-	
-	
 }

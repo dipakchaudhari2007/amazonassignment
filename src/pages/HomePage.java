@@ -5,13 +5,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.testng.Assert;
 import core.BaseTestPage;
+import core.FileInput;
 import core.TestReporter;
 import io.appium.java_client.TouchAction;
 
 public class HomePage extends BaseTestPage{
 
+	FileInput files= new FileInput();
 	
 	@FindBy(xpath = "//*[@resource-id='icp-btn-close-announce']")
     private WebElement buttonCancelLanguageSelection;
@@ -38,19 +40,29 @@ public class HomePage extends BaseTestPage{
 		buttonCancelLanguageSelection.click();
 		System.out.print("Clicked on close language selection");
 		} catch(Exception e) {
-			
+			Assert.fail("Failed to load Home Page");
 		}
-		
 	}
 	
-	public void searchItem(String keyword) {
+	/**
+	 * Enter the search keyword in search box and select value from auto suggestion
+	 */
+	
+	public HomePage EnterKeywordAndSearchItem() {
+		try {
+		String searchItemName = files.SearchItem(); //Fetching search item name from TestData.xls
+		
 		new TouchAction(driver).press(txtBoxSearch).release().perform();
-		txtBoxSearch.sendKeys(keyword);
+		txtBoxSearch.sendKeys(searchItemName);
 		TestReporter.logWithScreenShot("Searching... ");
 		wait.until(ExpectedConditions.visibilityOf(productSelected));
-		productSelected.click();
+		productSelected.click(); //Selecting product from auto suggestion
 		TestReporter.logWithScreenShot("Search Result ");
+		Assert.assertTrue(true,"Search Successful");
 		
+		} catch (Exception e) {
+			Assert.fail("Search process failed");
+		}
+		return this;
 	}
-
 }

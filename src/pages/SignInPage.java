@@ -4,10 +4,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.Reporter;
 
 import core.BaseTestPage;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidElement;
 
 public class SignInPage extends BaseTestPage {
 
@@ -22,28 +22,24 @@ public class SignInPage extends BaseTestPage {
 
 	@FindBy(id = "skip_sign_in_button")
 	private WebElement buttonSkipSingIn;
-
-	public WebElement getHeaderAmazon() {
-		return headerAmazon;
-	}
-
-	public WebElement getButtonSignIn() {
-		return buttonSignIn;
-	}
-
-	public WebElement getButtonCreateAccount() {
-		return buttonCreateAccount;
-	}
-
-	public WebElement getButtonSkipSingIn() {
-		return buttonSkipSingIn;
-	}
-
+	
 	@Override
 	public void waitForPageToLoad() {
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(buttonSignIn));
 
 	}
-
+	
+	/**
+	 * Click Sign In button
+	 */
+	public SignInPage clickSignInButton() {
+		try {
+			buttonSignIn.click();
+			Reporter.log("Sign in button is clickable");
+		} catch (Exception e) {
+			Assert.fail("Sign in button is not clickable");
+		}
+		return this;
+	}
 }

@@ -6,10 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.testng.Assert;
+import org.testng.Reporter;
 import core.BaseTestPage;
-import core.TestReporter;
-import io.appium.java_client.MobileElement;
 
 public class SearchResultPage extends BaseTestPage{
 
@@ -19,16 +18,6 @@ public class SearchResultPage extends BaseTestPage{
 
 	@FindBy(xpath = "//*[@resource-id='com.amazon.mShop.android.shopping:id/rs_corrections_mixed_quartz']")
 	private WebElement labelSearchResults;
-	
-	
-	public List<WebElement> getResultItem() {
-		return resultItem;
-	}
-
-	public WebElement getLabelSearchResults() {
-		return labelSearchResults;
-	}
-
 
 	@Override
 	public void waitForPageToLoad() {
@@ -36,5 +25,19 @@ public class SearchResultPage extends BaseTestPage{
 		wait.until(ExpectedConditions.visibilityOf(labelSearchResults));
 	}	
 		
-
+	/**
+	 * Get item name from search results page
+	 * @return
+	 */
+	
+	public String getItemName() {
+		String deviceName = "";
+		try {
+			deviceName = resultItem.get(2).getText();;
+			Reporter.log("Got item name from search results page");
+		} catch (Exception e) {
+			Assert.fail("Failed to get item name from search results page");
+		}
+		return deviceName;
+	}
 }

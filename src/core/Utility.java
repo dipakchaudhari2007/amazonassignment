@@ -18,16 +18,16 @@ public class Utility extends BaseTestCase{
 		int endPoint=(int) (size.getHeight() * finalPercentage);
 
 		new TouchAction(driver).press(width,startPoint).waitAction(Duration.ofMillis(duration)).moveTo(width,endPoint).release().perform();
-	
 }
+	
 	public static void swipeHorizontal(AppiumDriver<MobileElement> driver,double startPercentage,double finalPercentage,int duration){
 		Dimension size=driver.manage().window().getSize();
 		int height =(int) (size.height/2);
 		int startPoint=(int) (size.getWidth() * startPercentage);
 		int endPoint=(int) (size.getWidth() * finalPercentage);
 		new TouchAction(driver).press(startPoint,height).waitAction(Duration.ofMillis(duration)).moveTo(endPoint,height).release().perform();
-	
 }
+	
 	public static void zoomIn(AppiumDriver<MobileElement> driver) {
 		int scrHeight = driver.manage().window().getSize().getHeight(); //To get the mobile screen height
 		int scrWidth = driver.manage().window().getSize().getWidth();//To get the mobile screen width
@@ -37,7 +37,5 @@ public class Utility extends BaseTestCase{
 		System.out.println("scrWidth/2,scrHeight/2 ::::::  " + scrWidth/2 +","+ scrHeight/2);
 		multiTouch.add(tAction0).add(tAction1);
 		multiTouch.add(tAction0).add(tAction1).perform();// now perform both the actions simultaneously (tAction0 and tAction1)
-
 	}
-	
 }
