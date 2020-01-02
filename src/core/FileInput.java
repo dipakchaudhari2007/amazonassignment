@@ -39,5 +39,12 @@ public class FileInput {
 		String searchItem = SheetData().getCell(2,1).getContents();				
 		return searchItem;
 	}
+	
+	//Method to Extract Bank Name from obtained data
+		public String BankName() throws BiffException, IOException , NullPointerException{
+
+			String bankName = SheetData().getCell(3,1).getContents();						
+			return bankName;
+		}
 
 }

@@ -33,7 +33,6 @@ public class HomePage extends BaseTestPage{
 	@Override
 	public void waitForPageToLoad() {
 		
-		
 		try {
 		wait.until(ExpectedConditions.visibilityOf(buttonCancelLanguageSelection));
 		buttonCancelLanguageSelection.click();

@@ -1,5 +1,7 @@
 package test;
 
+import static org.testng.Assert.assertEquals;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,6 +19,7 @@ import pages.SignInPage;;
 public class AmazonTest extends BaseTestCase {
 	
 	String expectedItemName="";
+	String actualItemName="";
 	
 	FileInput files= new FileInput();
 	
@@ -37,20 +40,14 @@ public class AmazonTest extends BaseTestCase {
 		
 		loginObj.signIn(username, password); //Calling login method
 		Assert.assertTrue(true,"Login Successful");
-		
 		HomePage homePageObj=new HomePage();
 		homePageObj.waitForPageToLoad();
-		
 		String searchItem = files.SearchItem(); //Fetching search item name from TestData.xls
-		
 		homePageObj.searchItem(searchItem);
-		
 		SearchResultPage searchResultObj=new SearchResultPage();
 		searchResultObj.waitForPageToLoad();
-		
 		expectedItemName=searchResultObj.getResultItem().get(2).getText();
 		searchResultObj.getResultItem().get(2).click();
-		
 		ProductDetailsPage productDetailsPage=new ProductDetailsPage();
 		productDetailsPage.waitForPageToLoad();
 		
@@ -61,15 +58,14 @@ public class AmazonTest extends BaseTestCase {
 		productDetailsPage.getButtonBuyNow().click();
 		CheckoutPage checkoutObj=new CheckoutPage();
 		checkoutObj.waitForPageToLoad();
-		
-		// We don't have Test data for debit card: Failing test script here 
-		TestReporter.AssertTrueWithScreenshot(false, "Debit Card details not provided in test data so marking Test Case as fail");
-		
-		// TODO -----------
-		//	Pending Steps: -> Add card details 
-		// -> COntinue on checkout 
-		// -> Verify product name on checkout page 
-		
+		TestReporter.logWithScreenShot("Payments Page");
+		checkoutObj.getradioButtonNetBanking().click();
+		String bankName = files.BankName(); //Fetching netbanking Bank name from TestData.xls
+		checkoutObj.selectBankName(bankName);
+		checkoutObj.getContinueButton().click();
+		actualItemName=checkoutObj.getActualItemName().getText();
+		TestReporter.logWithScreenShot("CheckOut Page");
+		assertEquals(actualItemName, expectedItemName);	//Comparing the item name from product search and checkout page
 		
 	}
 
