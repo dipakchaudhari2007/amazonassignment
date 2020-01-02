@@ -46,7 +46,6 @@ public class Listener extends TestListenerAdapter {
     {		
     	Config.getLogger().info("Skipped : "+result.getName()); 	
         System.out.println("Skipped : "+result.getName());
-        
         Config.getLogger().info("Test Result ["+ Config.testCaseName + ": "+Config.testCaseIteration +":"+"Pass ]"); 	
         System.out.println("Test Result ["+ Config.testCaseName + ": "+Config.testCaseIteration +":"+"Pass ]");
        
@@ -58,9 +57,7 @@ public class Listener extends TestListenerAdapter {
 		System.out.println("Failed "+result.getName());	
 		    
 		driver= BaseTestCase.getDriver();
-
 		String testClassName = getTestClassName(result.getTestName()).trim();
-
 		String testMethodName = result.getName().toString().trim();
 		String screenShotName = testMethodName + ".jpg";
 
@@ -70,13 +67,9 @@ public class Listener extends TestListenerAdapter {
 					+ fileSeperator
 					+ takeScreenShot(driver, screenShotName, testClassName);
 			
-			
-			Config.test.log(LogStatus.FAIL, "Execution failed..........","");
-			
+			Config.test.log(LogStatus.FAIL, "Execution failed..........",imagePath);
 			String img=Config.test.addScreenCapture(System.getProperty("user.dir")+"\\screenshots\\Results\\"+testClassName+"\\"+screenShotName);
-			
 			Config.test.log(LogStatus.FAIL, "Failed : "+testMethodName, img);
-			
 			
 			Config.getLogger().info("Test Result ["+ Config.testCaseName+ ": "+Config.testCaseIteration +":"+"Pass ]"); 	
 	        System.out.println("Test Result ["+ Config.testCaseName+ ": "+Config.testCaseIteration +":"+"Pass ]");

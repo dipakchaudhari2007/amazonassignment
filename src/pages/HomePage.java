@@ -1,7 +1,6 @@
 package pages;
 
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,7 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import core.BaseTestPage;
 import core.TestReporter;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 
 public class HomePage extends BaseTestPage{
@@ -27,12 +25,14 @@ public class HomePage extends BaseTestPage{
 	@FindBy(xpath = "//*[@resource-id=\"com.amazon.mShop.android.shopping:id/iss_search_dropdown_item_query_builder\"]")
     private WebElement buttonAppendSearch;
 	
+	@FindBy(xpath = "//android.widget.TextView[@text='65-inch tv'])[2]")
+    private WebElement productSelected;
 	
-	
+	WebDriverWait wait=new WebDriverWait(driver, 20);
 
 	@Override
 	public void waitForPageToLoad() {
-		WebDriverWait wait=new WebDriverWait(driver, 20);
+		
 		
 		try {
 		wait.until(ExpectedConditions.visibilityOf(buttonCancelLanguageSelection));
@@ -46,10 +46,10 @@ public class HomePage extends BaseTestPage{
 	
 	public void searchItem(String keyword) {
 		new TouchAction(driver).press(txtBoxSearch).release().perform();
-		driver.findElement(By.xpath("//*[@resource-id=\"com.amazon.mShop.android.shopping:id/rs_search_src_text\"]")).sendKeys(keyword);
+		txtBoxSearch.sendKeys(keyword);
 		TestReporter.logWithScreenShot("Searching... ");
-		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//android.widget.TextView[@text='65-inch tv'])[2]")));
-        driver.findElement(By.xpath("(//android.widget.TextView[@text='65-inch tv'])[2]")).click();
+		wait.until(ExpectedConditions.visibilityOf(productSelected));
+		productSelected.click();
 		TestReporter.logWithScreenShot("Search Result ");
 		
 	}

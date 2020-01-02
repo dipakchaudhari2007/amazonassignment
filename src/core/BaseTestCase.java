@@ -45,9 +45,6 @@ public class BaseTestCase extends Config {
 
 	private static String APPLICATION_PROPERTIES_FILE = "/Users/dipakchaudhari/eclipse-workspace/assignment/resources/application.properties";
 	private static String APPIUM_SERVER_URL;
-	
-
-
 	private static String ANDROID_ID;
 	private static String ANDROID_APP;
 	private static String ANDROID_PKG_ID;
@@ -57,7 +54,6 @@ public class BaseTestCase extends Config {
 	private static String ANDROID_AUTOMATION_NAME;
 	private static String ANDROID_NO_RESET;
 	private static String ANDROID_FULL_RESET;
-
 	private static String EXECUTION_TYPE;
 
 	public void loadAppiumCapabilities() {
@@ -107,14 +103,14 @@ public class BaseTestCase extends Config {
 
 		case "ANDROID":
 			capabilities.setCapability(MobileCapabilityType.UDID, ANDROID_ID);
-			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, ANDROID_PLATFORM_NAME);
 			capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, ANDROID_AUTOMATION_NAME);
 			capabilities.setCapability(MobileCapabilityType.NO_RESET, ANDROID_NO_RESET);
 			capabilities.setCapability(MobileCapabilityType.FULL_RESET, ANDROID_FULL_RESET);
 			capabilities.setCapability("printPageSourceOnFindFailure", "true");
 			capabilities.setCapability(MobileCapabilityType.APP, ANDROID_APP);
-			//capabilities.setCapability("appPackage", ANDROID_PKG_ID);
-			//capabilities.setCapability("appActivity", ANDROID_ACTIVITY_ID);
+			capabilities.setCapability("appPackage", ANDROID_PKG_ID);
+			capabilities.setCapability("appActivity", ANDROID_ACTIVITY_ID);
 			capabilities.setCapability("appWaitActivity", ANDROID_WAIT_ACTIVITY_ID);
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
 			capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "60");
@@ -139,13 +135,6 @@ public class BaseTestCase extends Config {
 		log.info("Driver Initialized.....");
 		System.out.println("Driver Initialized.....");
 		Reporter.log("Driver Initialized.....");
-
-		/*
-		 * if(props.getProperty("log.detail").trim().toUpperCase().equals("FULL")) {
-		 * System.out.println("\"Enabling logs in : full details\"");
-		 * log.info("Enabling logs in : full details");
-		 * Register.registerEventListener(driver); }
-		 */
 	}
 	
 	 @BeforeSuite

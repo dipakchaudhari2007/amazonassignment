@@ -1,46 +1,49 @@
 package test;
 
-import java.time.Duration;
-
-import javax.swing.JOptionPane;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import core.BaseTestCase;
+import core.FileInput;
 import core.TestReporter;
 import core.Utility;
-import io.appium.java_client.TouchAction;
 import pages.CheckoutPage;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.ProductDetailsPage;
 import pages.SearchResultPage;
-import pages.SignInPage;
+import pages.SignInPage;;
 
 public class AmazonTest extends BaseTestCase {
 	
 	String expectedItemName="";
 	
+	FileInput files= new FileInput();
+	
 	@Test
-	public void login_and_search() {
+	public void login_and_search() throws Exception {
 		
 		SignInPage signInObj=new SignInPage();
-		signInObj.waitForPageToLoad();
+		signInObj.waitForPageToLoad(); 
 		TestReporter.logWithScreenShot("Welcome Page");
 		
 		signInObj.getButtonSignIn().click();
 			
 		LoginPage loginObj=new LoginPage();
 		loginObj.waitForPageToLoad();
-		TestReporter.log("Temp msg");
 		TestReporter.logWithScreenShot("Login Page");
-		loginObj.signIn("9033610313", "Test12345");
+		String username = files.Username(); //Fetching login username from TestData.xls
+		String password = files.Password(); //Fetching login password from TestData.xls
+		
+		loginObj.signIn(username, password); //Calling login method
 		Assert.assertTrue(true,"Login Successful");
 		
 		HomePage homePageObj=new HomePage();
 		homePageObj.waitForPageToLoad();
-		homePageObj.searchItem("65-inch TV");
+		
+		String searchItem = files.SearchItem(); //Fetching search item name from TestData.xls
+		
+		homePageObj.searchItem(searchItem);
 		
 		SearchResultPage searchResultObj=new SearchResultPage();
 		searchResultObj.waitForPageToLoad();
@@ -51,22 +54,21 @@ public class AmazonTest extends BaseTestCase {
 		ProductDetailsPage productDetailsPage=new ProductDetailsPage();
 		productDetailsPage.waitForPageToLoad();
 		
-		while(!(productDetailsPage.getButtonBuyNow().isDisplayed())){	
-		//Scroll Down 	
-		Utility.swipeVeritcal(driver, 0.9, 0.2, 2); 
+		while(!(productDetailsPage.getButtonBuyNow().isDisplayed())){ 	
+		Utility.swipeVeritcal(driver, 0.9, 0.2, 2); //Scroll Down 
 		
 		}
 		productDetailsPage.getButtonBuyNow().click();
 		CheckoutPage checkoutObj=new CheckoutPage();
 		checkoutObj.waitForPageToLoad();
 		
-		// We don't have Test data for debit card: Fasiling test script here 
+		// We don't have Test data for debit card: Failing test script here 
 		TestReporter.AssertTrueWithScreenshot(false, "Debit Card details not provided in test data so marking Test Case as fail");
 		
 		// TODO -----------
 		//	Pending Steps: -> Add card details 
-						// -> COntinue on checkout 
-						// -> Verify product name on checkout page 
+		// -> COntinue on checkout 
+		// -> Verify product name on checkout page 
 		
 		
 	}

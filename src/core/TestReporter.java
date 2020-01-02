@@ -1,16 +1,7 @@
 package core;
 
-import java.io.IOException;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.HTMLLayout;
-import org.apache.log4j.Logger;
-import org.apache.log4j.RollingFileAppender;
 import org.testng.Assert;
 import org.testng.Reporter;
-
 
 import com.relevantcodes.extentreports.LogStatus;
 
