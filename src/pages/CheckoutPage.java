@@ -53,12 +53,9 @@ public class CheckoutPage extends BaseTestPage{
 	 * Verify CheckOut Payments page loaded
 	 */
 	public CheckoutPage verifyCheckOutPaymentsPageDisplayed() {
-		
 		try {
 			waitForPageToLoad();
-			Assert.assertTrue(buttonContinue.isDisplayed(),"CheckOut page payment is not loaded");
-			Reporter.log("CheckOut page payment is loaded");
-			TestReporter.logWithScreenShot("CheckOut Payment Page");
+			TestReporter.AssertTrueWithScreenshot(buttonContinue.isDisplayed(),"Verify CheckOut page payment is loaded");
 		} catch (NoSuchElementException e) {
 			Assert.fail("Failed to load CheckOut payment page");
 		}
@@ -72,7 +69,6 @@ public class CheckoutPage extends BaseTestPage{
 		wait.until(ExpectedConditions.visibilityOf(dropDownBankName));
 		try {
 			String bankName = files.BankName(); //Fetching netbanking Bank name from TestData.xls
-			
 			dropDownBankName.click();
 			for (WebElement webElement : bankOptions) {
 				if (webElement.getText().equalsIgnoreCase(bankName)) {

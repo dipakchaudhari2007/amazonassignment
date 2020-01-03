@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.Reporter;
-
 import core.BaseTestPage;
 import core.FileInput;
 import core.TestReporter;
@@ -54,9 +52,7 @@ public class HomePage extends BaseTestPage{
 		
 		try {
 			waitForPageToLoad();
-			Assert.assertTrue(txtBoxSearch.isDisplayed(),"Home page not loaded");
-			Reporter.log("Home page is loaded");
-			TestReporter.logWithScreenShot("Home Page");
+			TestReporter.AssertTrueWithScreenshot(txtBoxSearch.isDisplayed(),"Verify Home page is loaded");
 		} catch (NoSuchElementException e) {
 			Assert.fail("Failed to load Home Page");
 		}
@@ -77,8 +73,6 @@ public class HomePage extends BaseTestPage{
 		wait.until(ExpectedConditions.visibilityOf(productSelected));
 		productSelected.click(); //Selecting product from auto suggestion
 		TestReporter.logWithScreenShot("Search Result ");
-		Assert.assertTrue(true,"Search Successful");
-		
 		} catch (Exception e) {
 			Assert.fail("Search process failed");
 		}

@@ -4,11 +4,13 @@
 	<listeners>
 	<listener class-name="core.Listener" />
 	</listeners>
-
 	<test name="Module 1">
 		<classes>
-			<class name="test.SearchScenario" />
+			<class name="test.AmazonTest" >
+				<methods>
+					<include name="testSearchAndCompare" />			
+				</methods>
+			</class>
 		</classes>
 	</test> 
-	
 </suite> 

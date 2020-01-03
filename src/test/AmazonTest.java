@@ -15,7 +15,7 @@ public class AmazonTest extends BaseTestCase {
 	FileInput files= new FileInput();
 	
 	@Test
-	public void SearchAndCompare() throws Exception {
+	public void testSearchAndCompare() throws Exception {
 		
 		SignInPage signInObj = new SignInPage();
 		signInObj.verifySignInPageDisplayed();

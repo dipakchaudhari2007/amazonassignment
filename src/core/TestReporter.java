@@ -19,16 +19,15 @@ public class TestReporter {
 		Config.getLogger().info(msg);
 		String image=Config.test.addScreenCapture(Support.getScreenshot(msg));
 		Config.test.log(LogStatus.INFO, msg, image);
-		
 	}
 	
 	public static void AssertTrueWithScreenshot(boolean condition,String msg) {
 		try {
-			Assert.assertTrue(condition, msg);
-			Config.test.log(LogStatus.PASS, msg, Support.getScreenshot(msg));
+			Assert.assertTrue(condition, msg + "Failed");
+			Config.test.log(LogStatus.PASS, msg + "Passed", Support.getScreenshot(msg));
 		} catch (Exception e) {
 			String image=Config.test.addScreenCapture(Support.getScreenshot(msg));
-			Config.test.log(LogStatus.FAIL, msg, image);
+			Config.test.log(LogStatus.FAIL, msg + "Failed", image);
 		}	
 	}
 }

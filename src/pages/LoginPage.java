@@ -40,9 +40,7 @@ public class LoginPage extends BaseTestPage{
 		
 		try {
 			waitForPageToLoad();
-			Assert.assertTrue(textBoxMobileNumber.isDisplayed(),"LogIn page not loaded");
-			Reporter.log("LogIn page is loaded");
-			TestReporter.logWithScreenShot("Login Page");
+			TestReporter.AssertTrueWithScreenshot(textBoxMobileNumber.isDisplayed(),"Verify Login page is loaded");
 		} catch (NoSuchElementException e) {
 			Assert.fail("Failed to load LogIn Page");
 		}

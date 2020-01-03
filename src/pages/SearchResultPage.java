@@ -34,9 +34,7 @@ public class SearchResultPage extends BaseTestPage{
 		
 		try {
 			waitForPageToLoad();
-			Assert.assertTrue(labelSearchResults.isDisplayed(),"Search Result page is not loaded");
-			Reporter.log("Search Result page is loaded");
-			TestReporter.logWithScreenShot("Search Results Page");
+			TestReporter.AssertTrueWithScreenshot(labelSearchResults.isDisplayed(),"Verify Search Result page is loaded");
 		} catch (NoSuchElementException e) {
 			Assert.fail("Failed to load Search Result page");
 		}

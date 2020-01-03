@@ -28,7 +28,6 @@ public class SignInPage extends BaseTestPage {
 	public void waitForPageToLoad() {
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(buttonSignIn));
-
 	}
 	
 	/**
@@ -38,15 +37,12 @@ public class SignInPage extends BaseTestPage {
 		
 		try {
 			waitForPageToLoad();
-			Assert.assertTrue(buttonSignIn.isDisplayed(),"SignIn page not loaded");
-			Reporter.log("SignIn page is loaded");
-			TestReporter.logWithScreenShot("Welcome Page");
+			TestReporter.AssertTrueWithScreenshot(buttonSignIn.isDisplayed(),"Verify Sign in page is loaded");
 		} catch (NoSuchElementException e) {
 			Assert.fail("Failed to load SignIn Page");
 		}
 		return this;
 	}
-	
 	
 	/**
 	 * Click Sign In button

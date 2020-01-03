@@ -33,9 +33,7 @@ public class ProductDetailsPage extends BaseTestPage{
 		
 		try {
 			waitForPageToLoad();
-			Assert.assertTrue(buttonBuyNow.isDisplayed(),"Product Details page is not loaded");
-			Reporter.log("Product Details page is loaded");
-			TestReporter.logWithScreenShot("Product Details Page");
+			TestReporter.AssertTrueWithScreenshot(buttonBuyNow.isDisplayed(),"Verify Product Details page is loaded");
 		} catch (NoSuchElementException e) {
 			Assert.fail("Failed to load Product Details page");
 		}
