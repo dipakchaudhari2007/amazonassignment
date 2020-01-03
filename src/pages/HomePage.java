@@ -1,11 +1,14 @@
 package pages;
 
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.Reporter;
+
 import core.BaseTestPage;
 import core.FileInput;
 import core.TestReporter;
@@ -42,6 +45,22 @@ public class HomePage extends BaseTestPage{
 		} catch(Exception e) {
 			Assert.fail("Failed to load Home Page");
 		}
+	}
+	
+	/**
+	 * Verify Home page loaded
+	 */
+	public HomePage verifyHomePageDisplayed() {
+		
+		try {
+			waitForPageToLoad();
+			Assert.assertTrue(txtBoxSearch.isDisplayed(),"Home page not loaded");
+			Reporter.log("Home page is loaded");
+			TestReporter.logWithScreenShot("Home Page");
+		} catch (NoSuchElementException e) {
+			Assert.fail("Failed to load Home Page");
+		}
+		return this;
 	}
 	
 	/**

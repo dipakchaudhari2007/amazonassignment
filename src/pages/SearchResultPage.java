@@ -2,6 +2,7 @@ package pages;
 
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import core.BaseTestPage;
+import core.TestReporter;
 
 public class SearchResultPage extends BaseTestPage{
 
@@ -24,6 +26,22 @@ public class SearchResultPage extends BaseTestPage{
 		WebDriverWait wait=new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(labelSearchResults));
 	}	
+	
+	/**
+	 * Verify Search Result page loaded
+	 */
+	public SearchResultPage verifySearchResultPageDisplayed() {
+		
+		try {
+			waitForPageToLoad();
+			Assert.assertTrue(labelSearchResults.isDisplayed(),"Search Result page is not loaded");
+			Reporter.log("Search Result page is loaded");
+			TestReporter.logWithScreenShot("Search Results Page");
+		} catch (NoSuchElementException e) {
+			Assert.fail("Failed to load Search Result page");
+		}
+		return this;
+	}
 		
 	/**
 	 * Get item name from search results page

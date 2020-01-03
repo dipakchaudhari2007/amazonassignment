@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -7,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import core.BaseTestPage;
+import core.TestReporter;
 import core.Utility;
 
 public class ProductDetailsPage extends BaseTestPage{
@@ -23,6 +25,22 @@ public class ProductDetailsPage extends BaseTestPage{
 		WebDriverWait wait=new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(labelProductTitle));
 	}	
+	
+	/**
+	 * Verify Product Details page loaded
+	 */
+	public ProductDetailsPage verifyProductDetailsPageDisplayed() {
+		
+		try {
+			waitForPageToLoad();
+			Assert.assertTrue(buttonBuyNow.isDisplayed(),"Product Details page is not loaded");
+			Reporter.log("Product Details page is loaded");
+			TestReporter.logWithScreenShot("Product Details Page");
+		} catch (NoSuchElementException e) {
+			Assert.fail("Failed to load Product Details page");
+		}
+		return this;
+	}
 	
 	/**
 	 * Buy Now button click on Product details page

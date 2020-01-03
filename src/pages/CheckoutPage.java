@@ -2,6 +2,7 @@ package pages;
 
 import java.util.List;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -47,6 +48,22 @@ public class CheckoutPage extends BaseTestPage{
 		wait.until(ExpectedConditions.visibilityOf(buttonContinue));
 		TestReporter.logWithScreenShot("Delivery Date Details ");
 	}	
+	
+	/**
+	 * Verify CheckOut Payments page loaded
+	 */
+	public CheckoutPage verifyCheckOutPaymentsPageDisplayed() {
+		
+		try {
+			waitForPageToLoad();
+			Assert.assertTrue(buttonContinue.isDisplayed(),"CheckOut page payment is not loaded");
+			Reporter.log("CheckOut page payment is loaded");
+			TestReporter.logWithScreenShot("CheckOut Payment Page");
+		} catch (NoSuchElementException e) {
+			Assert.fail("Failed to load CheckOut payment page");
+		}
+		return this;
+	}
 		
 	/**
 	 * Select Bank Name
@@ -120,6 +137,7 @@ public class CheckoutPage extends BaseTestPage{
 		try {
 			Assert.assertEquals(actualValue, expectedValue, "String Comparison failed");
 			Reporter.log("Item names are matching");
+			TestReporter.logWithScreenShot("CheckOut Page");
 		} catch (Exception e) {
 			Assert.fail("Failed to compare both values");
 		}

@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,7 +28,27 @@ public class LoginPage extends BaseTestPage{
 	@FindBy(xpath = "//*[@resource-id=\"continue\"]")
     private MobileElement buttonContinue;
 	
+	@Override
+	public void waitForPageToLoad() {
+		wait.until(ExpectedConditions.visibilityOf(buttonContinue));
+	}
 
+	/**
+	 * Verify LogIn In page loaded
+	 */
+	public LoginPage verifyLogInPageDisplayed() {
+		
+		try {
+			waitForPageToLoad();
+			Assert.assertTrue(textBoxMobileNumber.isDisplayed(),"LogIn page not loaded");
+			Reporter.log("LogIn page is loaded");
+			TestReporter.logWithScreenShot("Login Page");
+		} catch (NoSuchElementException e) {
+			Assert.fail("Failed to load LogIn Page");
+		}
+		return this;
+	}
+	
 	/**
 	 * User login
 	 */
@@ -41,13 +62,7 @@ public class LoginPage extends BaseTestPage{
 			Assert.fail("Sign in failed");
 		}
 		return this;
-	}
-
-	@Override
-	public void waitForPageToLoad() {
-		wait.until(ExpectedConditions.visibilityOf(buttonContinue));
-	}
-	
+	}	
 	
 	/**
 	 * Enter username and password for Sign In

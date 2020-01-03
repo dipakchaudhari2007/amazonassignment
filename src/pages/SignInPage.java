@@ -1,13 +1,14 @@
 package pages;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
-
 import core.BaseTestPage;
+import core.TestReporter;
 
 public class SignInPage extends BaseTestPage {
 
@@ -29,6 +30,23 @@ public class SignInPage extends BaseTestPage {
 		wait.until(ExpectedConditions.visibilityOf(buttonSignIn));
 
 	}
+	
+	/**
+	 * Verify Sign In page loaded
+	 */
+	public SignInPage verifySignInPageDisplayed() {
+		
+		try {
+			waitForPageToLoad();
+			Assert.assertTrue(buttonSignIn.isDisplayed(),"SignIn page not loaded");
+			Reporter.log("SignIn page is loaded");
+			TestReporter.logWithScreenShot("Welcome Page");
+		} catch (NoSuchElementException e) {
+			Assert.fail("Failed to load SignIn Page");
+		}
+		return this;
+	}
+	
 	
 	/**
 	 * Click Sign In button
